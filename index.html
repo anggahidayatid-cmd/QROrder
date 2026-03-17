@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Digital Scan & Order</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Tambahan style cepat agar rapi */
+        .payment-box {
+            background: #fff;
+            padding: 15px;
+            border-top: 2px solid #eee;
+            margin-top: 10px;
+        }
+        .pay-option {
+            margin-right: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+        }
+        .pay-option input { margin-right: 5px; accent-color: #25D366; }
+        .footer { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background: white; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>☕ Kedai Kopi Kita</h1>
+        <p id="displayMeja">Meja: Memuat...</p>
+    </header>
+
+    <div class="container" id="menuList">
+        <div class="card">
+            <img src="Image_1.jpeg" alt="Kopi">
+            <div class="info">
+                <h3>Kopi Susu Gula Aren</h3>
+                <p class="price">Rp 15.000</p>
+                <div class="qty-box">
+                    <button onclick="changeQty('kopi', -1)">-</button>
+                    <input type="number" id="qty-kopi" class="qty-input" data-nama="Kopi Susu Gula Aren" data-harga="15000" value="0" readonly>
+                    <button onclick="changeQty('kopi', 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/roti.jpg" alt="Roti">
+            <div class="info">
+                <h3>Croissant Cokelat</h3>
+                <p class="price">Rp 20.000</p>
+                <div class="qty-box">
+                    <button onclick="changeQty('roti', -1)">-</button>
+                    <input type="number" id="qty-roti" class="qty-input" data-nama="Croissant Cokelat" data-harga="20000" value="0" readonly>
+                    <button onclick="changeQty('roti', 1)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="payment-box">
+            <p style="margin: 0 0 10px 0; font-weight: bold; font-size: 14px;">Metode Pembayaran:</p>
+            <label class="pay-option">
+                <input type="radio" name="pembayaran" value="Cash" checked> 💵 Cash
+            </label>
+            <label class="pay-option">
+                <input type="radio" name="pembayaran" value="QRIS"> 📱 QRIS
+            </label>
+        </div>
+        <button class="btn-pesan" onclick="kirimWhatsApp()" style="width: 100%; padding: 15px; background: #25D366; color: white; border: none; font-weight: bold;">Pesan Sekarang</button>
+    </div>
+
+    <script>
+        // Mendeteksi nomor meja dari URL
+        const params = new URLSearchParams(window.location.search);
+        const meja = params.get('meja') || "Umum";
+        document.getElementById('displayMeja').innerText = "Meja: " + meja;
+
+        function changeQty(id, delta) {
+            let input = document.getElementById('qty-' + id);
+            let val = parseInt(input.value) + delta;
+            if (val >= 0) input.value = val;
+        }
+
+        function kirimWhatsApp() {
+            const noWA = "6282217258473"; 
+            let total = 0;
+            let listPesanan = "";
+            const inputs = document.querySelectorAll('.qty-input');
+            
+            // Ambil metode pembayaran
+            const metodeBayar = document.querySelector('input[name="pembayaran"]:checked').value;
+
+            inputs.forEach(item => {
+                if (parseInt(item.value) > 0) {
+                    let subtotal = parseInt(item.value) * parseInt(item.getAttribute('data-harga'));
+                    listPesanan += `- ${item.getAttribute('data-nama')} (x${item.value}) = Rp${subtotal.toLocaleString('id-ID')}\n`;
+                    total += subtotal;
+                }
+            });
+
+            if (total === 0) return alert("Pilih menu dulu ya!");
+
+            let teks = `*PESANAN BARU - MEJA ${meja}*\n`;
+            teks += `--------------------------\n`;
+            teks += `${listPesanan}`;
+            teks += `--------------------------\n`;
+            teks += `*TOTAL: Rp${total.toLocaleString('id-ID')}*\n`;
+            teks += `*METODE BAYAR: ${metodeBayar}*\n\n`;
+            
+            if(metodeBayar === "QRIS") {
+                teks += `_Tolong kirimkan QRIS-nya ya Min!_`;
+            } else {
+                teks += `_Saya bayar cash di kasir._`;
+            }
+
+            window.open(`https://wa.me/${noWA}?text=${encodeURIComponent(teks)}`);
+        }
+    </script>
+</body>
+</html>
