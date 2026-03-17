@@ -1,0 +1,136 @@
+/* Dasar Halaman */
+body { 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    background: #f8f9fa; 
+    margin: 0; 
+    padding-bottom: 160px; /* Ditambah agar konten tidak tertutup footer yang lebih tinggi */
+}
+
+header { 
+    background: #333; 
+    color: white; 
+    padding: 20px; 
+    text-align: center; 
+    border-radius: 0 0 20px 20px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Kontainer Menu */
+.container { padding: 15px; }
+
+.card { 
+    background: white; 
+    display: flex; 
+    border-radius: 12px; 
+    margin-bottom: 15px; 
+    overflow: hidden; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+}
+
+.card img { 
+    width: 100px; 
+    height: 100px; 
+    object-fit: cover; 
+}
+
+.info { 
+    padding: 10px; 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+}
+
+.info h3 { margin: 0 0 5px 0; font-size: 16px; }
+
+.price { 
+    color: #27ae60; 
+    font-weight: bold; 
+    margin: 0; 
+    font-size: 14px;
+}
+
+/* Kontrol Quantity */
+.qty-box { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    margin-top: 8px; 
+}
+
+.qty-box button { 
+    width: 32px; 
+    height: 32px; 
+    border: none; 
+    background: #e0e0e0; 
+    border-radius: 8px; 
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.qty-box input { 
+    width: 30px; 
+    text-align: center; 
+    border: none; 
+    background: transparent; 
+    font-weight: bold;
+}
+
+/* Floating Footer & Payment */
+.footer { 
+    position: fixed; 
+    bottom: 0; 
+    width: 100%; 
+    background: white; 
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1); 
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.payment-box {
+    padding: 12px 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.payment-box p {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: #666;
+}
+
+.pay-option {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.pay-option input {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    accent-color: #25D366; /* Hijau WhatsApp */
+}
+
+.btn-pesan { 
+    width: calc(100% - 30px); 
+    margin: 10px 15px 15px 15px;
+    padding: 15px; 
+    background: #25D366; 
+    color: white; 
+    border: none; 
+    border-radius: 12px; 
+    font-weight: bold; 
+    font-size: 16px; 
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-pesan:active {
+    background: #1da851;
+    transform: scale(0.98);
+}
